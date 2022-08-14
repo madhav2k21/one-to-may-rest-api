@@ -19,9 +19,14 @@ import java.util.Set;
 @Table(name = "posts")
 public class Post extends AuditModel{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+
+    @EmbeddedId
+    private PostKey postKey;
+
+
 
     @NotNull
     @Size(max = 100)

@@ -18,16 +18,21 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class Comment extends AuditModel{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private CommentKey commentKey;
 
     @NotNull
     @Lob
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
+//    @JoinColumn(name = "post_id, post_type", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "post_id", referencedColumnName = "post_id",
+                    insertable = false, updatable = false),
+            @JoinColumn(name = "post_type", referencedColumnName = "post_type",
+                    insertable = false, updatable = false)
+    })
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
 
